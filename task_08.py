@@ -11,43 +11,44 @@ multiply_numbers(2.3) # => 6
 multiply_numbers([5, 6, 4]) # => 120
 '''
 def multiply_numbers(inputs):
-    # Проверяем на None и на соответствия типов
-    if inputs is None or not isinstance(inputs, (str, list, int, float)):
-        return None
+    # Проверяем, является ли входной аргумент числом
+    if isinstance(inputs, (int, float)):
+        inputs = str(inputs)  # Превращаем число в строку
 
-    product = 1
-    found_digit = False
-
-    # Если входные данные - строка
+    # Проверяем, является ли входной аргумент строкой
     if isinstance(inputs, str):
+        product = 1
+        found_digit = False
+
         for char in inputs:
             if char.isdigit():  # Проверяем, является ли символ цифрой
-                product *= int(char)
+                product *= int(char)  # Умножаем на цифру
                 found_digit = True
 
-    # Если входные данные - список
+        return product if found_digit else None
+
+    # Если входные данные - это список
     elif isinstance(inputs, list):
+        product = 1
+        found_digit = False
+        
         for item in inputs:
-            if isinstance(item, (int, float)):  # Проверяем, является ли элемент числом
-                digits = str(int(item))  # Убираем дробную часть и превращаем в строку
-                for char in digits:
-                    product *= int(char)
-                    found_digit = True
+            if isinstance(item, (int, float)):
+                for char in str(item):
+                    if char.isdigit():
+                        product *= int(char)
+                        found_digit = True
 
-    # Если входные данные - число (int или float)
-    elif isinstance(inputs, (int, float)):
-        digits = str(int(inputs))  
-        for char in digits:
-            product *= int(char)
-            found_digit = True
+        return product if found_digit else None
 
-    
-    return product if found_digit else None
+   
+    return None
 
 # Тесты
-print(multiply_numbers(None))         
-print(multiply_numbers('ss'))         
-print(multiply_numbers('1234'))       
-print(multiply_numbers('sssdd34'))    
-print(multiply_numbers(2.3))          
-print(multiply_numbers([5, 6, 4]))   
+print(multiply_numbers(None))               
+print(multiply_numbers('ss'))                
+print(multiply_numbers('1234'))              
+print(multiply_numbers('sssdd34'))           
+print(multiply_numbers(2.3))                 
+print(multiply_numbers([5, 6, 4]))           
+

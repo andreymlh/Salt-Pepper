@@ -8,7 +8,7 @@
 class Dessert:
     def __init__(self, name=None, calories=0):
         self._name = name
-        self._calories = calories
+        self._calories = int(calories)
 
     @property
     def name(self):
@@ -24,7 +24,7 @@ class Dessert:
 
     @calories.setter
     def calories(self, value):
-        self._calories = value
+        self._calories = int(value)
 
     def is_healthy(self):
         return self._calories < 200
