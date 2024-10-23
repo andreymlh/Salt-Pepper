@@ -5,9 +5,9 @@
 false только в тех случаях, когда flavor равняется «black licorice».
 '''
 class Dessert:
-    def __init__(self, name=None, calories=0):
-        self._name = name
-        self._calories = int(calories)
+    def __init__(self):
+        self._name = ""
+        self._calories = 0 
 
     @property
     def name(self):
@@ -15,51 +15,72 @@ class Dessert:
 
     @name.setter
     def name(self, value):
+        if not isinstance(value, str):
+            raise ValueError("Name must be string")
         self._name = value
 
     @property
     def calories(self):
         return self._calories
-
+    
     @calories.setter
     def calories(self, value):
-        self._calories = int(value)
-
-    def is_healthy(self):
-        return self._calories < 200
+        if not isinstance(value, int):
+            raise ValueError("Calories must be an integer")
+        self._calories = value
 
     def is_delicious(self):
-        return True
-
-
+        return self._calories > 0 
+    
+    def is_healthy(self):
+        return self._calories < 200
+    
+    
 class JellyBean(Dessert):
-    def __init__(self, name=None, calories=0, flavor=None):
-        super().__init__(name, calories)
-        self._flavor = flavor
+    def __init__(self):
+        super().__init__()
+        self._flavor = ""  
 
     @property
     def flavor(self):
-        return self._flavor
+        return self._flavor  
 
     @flavor.setter
     def flavor(self, value):
+        if not isinstance(value, str):
+            raise ValueError("Flavor must be a string")
         self._flavor = value
 
     def is_delicious(self):
-        return self._flavor != "black licorice"  
+        return self._flavor.lower() != "black licorice"
 
-# Примеры использования
-jelly_bean1 = JellyBean("Cherry Jellybean", 150, "cherry")
-jelly_bean2 = JellyBean("Licorice Jellybean", 150, "black licorice")
+# Тестирование 
+dessert = Dessert()
+dessert.name = "test_name"
+print(dessert.name)
+dessert.name = "test_name2"
+print(dessert.name)
+if dessert.name != "test_name2": raise Exception("Setter for name is not working")
 
-print(jelly_bean1.name)          
-print(jelly_bean1.calories)      
-print(jelly_bean1.flavor)        
-print(jelly_bean1.is_healthy())  
-print(jelly_bean1.is_delicious()) 
+dessert.calories = 350 
+print(dessert.calories)  
+dessert.calories = 150  
+print(dessert.calories)  
 
-print(jelly_bean2.name)          
-print(jelly_bean2.calories)      
-print(jelly_bean2.flavor)        
-print(jelly_bean2.is_healthy())  
-print(jelly_bean2.is_delicious()) 
+print(dessert.is_delicious())
+print(dessert.is_healthy())  
+
+# 12
+jelly_bean = JellyBean()
+jelly_bean.name = "Test Jelly Bean"
+jelly_bean.calories = 100
+jelly_bean.flavor = "black licorice"
+
+print(jelly_bean.name)  
+print(jelly_bean.calories)  
+print(jelly_bean.flavor)  
+print(jelly_bean.is_delicious())  
+
+jelly_bean.flavor = "strawberry"
+print(jelly_bean.is_delicious())
+

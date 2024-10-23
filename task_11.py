@@ -6,9 +6,9 @@
 '''
 
 class Dessert:
-    def __init__(self, name=None, calories=0):
-        self._name = name
-        self._calories = int(calories)
+    def __init__(self):
+        self._name = ""
+        self._calories = 0 
 
     @property
     def name(self):
@@ -16,32 +16,40 @@ class Dessert:
 
     @name.setter
     def name(self, value):
+        if not isinstance(value, str):
+            raise ValueError("Name must be string")
         self._name = value
 
     @property
     def calories(self):
         return self._calories
-
+    
     @calories.setter
     def calories(self, value):
-        self._calories = int(value)
-
-    def is_healthy(self):
-        return self._calories < 200
+        if not isinstance(value, int):
+            raise ValueError("Calories must be an integer")
+        self._calories = value
 
     def is_delicious(self):
-        return True
+        return self._calories > 0 
+    
+    def is_healthy(self):
+        return self._calories < 200
+    
 
-# Примеры использования
-dessert1 = Dessert("Chocolate Cake", 350)
-dessert2 = Dessert("Fruit Salad", 150)
+# Тестирование 
+dessert = Dessert()
+dessert.name = "test_name"
+print(dessert.name)
+dessert.name = "test_name2"
+print(dessert.name)
+if dessert.name != "test_name2": raise Exception("Setter for name is not working")
 
-print(dessert1.name)        
-print(dessert1.calories)    
-print(dessert1.is_healthy())  
-print(dessert1.is_delicious()) 
+dessert.calories = 350
+print(dessert.calories)  
+dessert.calories = 150  
+print(dessert.calories)  
 
-print(dessert2.name)        
-print(dessert2.calories)    
-print(dessert2.is_healthy())  
-print(dessert2.is_delicious()) 
+print(dessert.is_delicious())
+
+print(dessert.is_healthy())  
