@@ -23,17 +23,20 @@ class Dessert:
     def calories(self):
         return self._calories
     
+    
+
     @calories.setter
     def calories(self, value):
-        if not isinstance(value, int):
-            raise ValueError("Calories must be an integer")
         self._calories = value
 
     def is_delicious(self):
-        return self._calories > 0 
+        return True 
+
     
     def is_healthy(self):
-        return self._calories < 200
+        if isinstance(self._calories, (int, str)) and str(self._calories).isdigit():
+            return int(self._calories) < 200
+        return False
     
     
 class JellyBean(Dessert):
@@ -52,7 +55,8 @@ class JellyBean(Dessert):
         self._flavor = value
 
     def is_delicious(self):
-        return self._flavor.lower() != "black licorice"
+        #return self._flavor.lower() != "black licorice"
+        return str(self._flavor).lower() != "black licorice"
 
 # Тестирование 
 dessert = Dessert()
@@ -64,7 +68,7 @@ if dessert.name != "test_name2": raise Exception("Setter for name is not working
 
 dessert.calories = 350 
 print(dessert.calories)  
-dessert.calories = 150  
+dessert.calories = "150"  
 print(dessert.calories)  
 
 print(dessert.is_delicious())
