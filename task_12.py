@@ -4,6 +4,8 @@
 обязательными). Измените метод is_delicious таким образом, чтобы он возвращал
 false только в тех случаях, когда flavor равняется «black licorice».
 '''
+import math
+
 class Dessert:
     def __init__(self):
         self._name = ""
@@ -34,9 +36,10 @@ class Dessert:
 
     
     def is_healthy(self):
-        if isinstance(self._calories, (int, str)) and str(self._calories).isdigit():
-            return int(self._calories) < 200
-        return False
+        if type(self._calories) in (int, float) and math.floor(float(self._calories)) < 200:
+            return True
+        else:
+            return False
     
     
 class JellyBean(Dessert):
@@ -68,7 +71,7 @@ if dessert.name != "test_name2": raise Exception("Setter for name is not working
 
 dessert.calories = 350 
 print(dessert.calories)  
-dessert.calories = "150"  
+dessert.calories = 190  
 print(dessert.calories)  
 
 print(dessert.is_delicious())
@@ -77,7 +80,7 @@ print(dessert.is_healthy())
 # 12
 jelly_bean = JellyBean()
 jelly_bean.name = "Test Jelly Bean"
-jelly_bean.calories = 100
+jelly_bean.calories = 150
 jelly_bean.flavor = "black licorice"
 
 print(jelly_bean.name)  
